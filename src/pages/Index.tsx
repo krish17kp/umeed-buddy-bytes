@@ -1,12 +1,39 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { Header } from "@/components/layout/header";
+import { HeroSection } from "@/components/sections/hero";
+import { FeaturesSection } from "@/components/sections/features";
+import { CTASection } from "@/components/sections/cta";
+import { Footer } from "@/components/layout/footer";
+import { CrisisBanner } from "@/components/ui/crisis-banner";
+import { MentalHealthDisclaimer } from "@/components/ui/disclaimer";
 
 const Index = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-calm-gradient">
+      <Header />
+      
+      <main>
+        <HeroSection />
+        
+        {/* Crisis support - always visible */}
+        <section className="py-8 bg-background/50">
+          <div className="container">
+            <CrisisBanner />
+          </div>
+        </section>
+        
+        <FeaturesSection />
+        
+        {/* Mental health disclaimer */}
+        <section className="py-8">
+          <div className="container">
+            <MentalHealthDisclaimer />
+          </div>
+        </section>
+        
+        <CTASection />
+      </main>
+      
+      <Footer />
     </div>
   );
 };
