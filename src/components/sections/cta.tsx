@@ -1,15 +1,42 @@
 import { ArrowRight, Users, Sparkles, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { useState } from "react";
 
 export function CTASection() {
+  const [loading, setLoading] = useState(false);
+  const [results, setResults] = useState<any[]>([]);
+
+  const handleFindSupport = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch("/api/local-support", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          lat: 19.076, // ✅ You can later make this dynamic with geolocation
+          lon: 72.8777,
+          radius: 5000,
+        }),
+      });
+
+      const data = await response.json();
+      setResults(data);
+      console.log("Nearby support:", data);
+    } catch (err) {
+      console.error("Error fetching support:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <section className="py-16 md:py-24">
       <div className="container">
         <Card className="relative overflow-hidden p-8 md:p-12 lg:p-16 bg-hero-gradient shadow-warm">
           {/* Background pattern */}
           <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent"></div>
-          
+
           <div className="relative text-center space-y-8 max-w-4xl mx-auto">
             {/* Icon */}
             <div className="w-16 h-16 mx-auto bg-white/20 rounded-2xl flex items-center justify-center">
@@ -19,14 +46,15 @@ export function CTASection() {
             {/* Heading */}
             <div className="space-y-4">
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight">
-                Ready to Start Your 
+                Ready to Start Your
                 <br />
                 Wellness Journey?
               </h2>
-              
+
               <p className="text-lg text-white/90 max-w-2xl mx-auto">
-                Join hundreds of Indian students who have already taken the first step 
-                towards better mental health with Umeed's supportive, privacy-first platform.
+                Join hundreds of Indian students who have already taken the
+                first step towards better mental health with Umeed's supportive,
+                privacy-first platform.
               </p>
             </div>
 
@@ -48,16 +76,18 @@ export function CTASection() {
 
             {/* Action buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button 
+              <Button
                 size="lg"
                 className="bg-white text-primary hover:bg-white/90 shadow-soft"
+                onClick={handleFindSupport}
+                disabled={loading}
               >
                 <Users className="w-5 h-5 mr-2" />
-                Start Free Today
+                {loading ? "Searching..." : "Find Local Support"}
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
-              
-              <Button 
+
+              <Button
                 variant="outline"
                 size="lg"
                 className="border-white/30 text-white hover:bg-white/10"
@@ -66,6 +96,26 @@ export function CTASection() {
                 Learn More
               </Button>
             </div>
+
+            {/* Results display */}
+            {results.length > 0 && (
+              <div className="mt-6 bg-white/10 rounded-lg p-4 text-left">
+                <h3 className="text-white font-semibold mb-2">
+                  Nearby Support Centers:
+                </h3>
+                <ul className="space-y-2 text-white/90">
+                  {results.slice(0, 5).map((place: any, i: number) => (
+                    <li key={i}>
+                      <span className="font-medium">
+                        {place.name || "Unnamed"}
+                      </span>
+                      {place.address ? ` – ${place.address}` : ""}
+                      {place.phone ? ` 📞 ${place.phone}` : ""}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
             {/* Trust message */}
             <div className="pt-6 text-sm text-white/75">

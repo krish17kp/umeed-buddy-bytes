@@ -2,7 +2,27 @@ import type { Config } from "tailwindcss";
 
 export default {
   darkMode: ["class"],
-  content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
+  content: [
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+  ],
+  // ✅ Safelist dynamic classes used in Features cards
+  safelist: [
+    "bg-wellness-focus/10",
+    "text-wellness-focus",
+    "bg-destructive/10",
+    "text-destructive",
+    "bg-primary/10",
+    "text-primary",
+    "bg-accent/10",
+    "text-accent",
+    "bg-wellness-energy/10",
+    "text-wellness-energy",
+    "bg-wellness-calm/10",
+    "text-wellness-calm",
+  ],
   prefix: "",
   theme: {
     container: {
@@ -70,68 +90,40 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       backgroundImage: {
-        'hero-gradient': 'var(--gradient-hero)',
-        'calm-gradient': 'var(--gradient-calm)',
-        'card-gradient': 'var(--gradient-card)',
+        "hero-gradient": "var(--gradient-hero)",
+        "calm-gradient": "var(--gradient-calm)",
+        "card-gradient": "var(--gradient-card)",
       },
       boxShadow: {
-        'soft': 'var(--shadow-soft)',
-        'warm': 'var(--shadow-warm)',
-        'gentle': 'var(--shadow-gentle)',
+        soft: "var(--shadow-soft)",
+        warm: "var(--shadow-warm)",
+        gentle: "var(--shadow-gentle)",
       },
       transitionTimingFunction: {
-        'smooth': 'cubic-bezier(0.4, 0, 0.2, 1)',
-        'bounce': 'cubic-bezier(0.68, -0.55, 0.265, 1.55)',
+        smooth: "cubic-bezier(0.4, 0, 0.2, 1)",
+        bounce: "cubic-bezier(0.68, -0.55, 0.265, 1.55)",
       },
       keyframes: {
         "accordion-down": {
-          from: {
-            height: "0",
-          },
-          to: {
-            height: "var(--radix-accordion-content-height)",
-          },
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
-          from: {
-            height: "var(--radix-accordion-content-height)",
-          },
-          to: {
-            height: "0",
-          },
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
         },
         "fade-in": {
-          "0%": {
-            opacity: "0",
-            transform: "translateY(20px)",
-          },
-          "100%": {
-            opacity: "1",
-            transform: "translateY(0)",
-          },
+          "0%": { opacity: "0", transform: "translateY(20px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
         },
         "slide-up": {
-          "0%": {
-            opacity: "0",
-            transform: "translateY(30px)",
-          },
-          "100%": {
-            opacity: "1",
-            transform: "translateY(0)",
-          },
+          "0%": { opacity: "0", transform: "translateY(30px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
         },
         "gentle-bounce": {
-          "0%": {
-            opacity: "0",
-            transform: "scale(0.8) translateY(30px)",
-          },
-          "50%": {
-            transform: "scale(1.05) translateY(-10px)",
-          },
-          "100%": {
-            opacity: "1",
-            transform: "scale(1) translateY(0)",
-          },
+          "0%": { opacity: "0", transform: "scale(0.8) translateY(30px)" },
+          "50%": { transform: "scale(1.05) translateY(-10px)" },
+          "100%": { opacity: "1", transform: "scale(1) translateY(0)" },
         },
       },
       animation: {

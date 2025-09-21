@@ -56,7 +56,7 @@
     --gradient-hero: linear-gradient(135deg, hsl(140 45% 65%), hsl(25 85% 70%));
     --gradient-calm: linear-gradient(180deg, hsl(200 50% 95%), hsl(32 46% 96%));
     --gradient-card: linear-gradient(145deg, hsl(30 40% 98%), hsl(35 25% 94%));
-    
+
     /* Shadows for depth */
     --shadow-soft: 0 4px 20px -5px hsl(140 35% 45% / 0.15);
     --shadow-warm: 0 8px 30px -8px hsl(25 85% 70% / 0.25);
@@ -202,9 +202,85 @@
   }
 
   /* Wellness mood colors */
-  .mood-very-low { @apply bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400; }
-  .mood-low { @apply bg-orange-100 text-orange-800 dark:bg-orange-900/20 dark:text-orange-400; }
-  .mood-neutral { @apply bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-400; }
-  .mood-ok { @apply bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400; }
-  .mood-great { @apply bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400; }
+  .mood-very-low {
+    @apply bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400;
+  }
+  .mood-low {
+    @apply bg-orange-100 text-orange-800 dark:bg-orange-900/20 dark:text-orange-400;
+  }
+  .mood-neutral {
+    @apply bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-400;
+  }
+  .mood-ok {
+    @apply bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400;
+  }
+  .mood-great {
+    @apply bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400;
+  }
+}
+
+/* === Clickability + gradient aliases =================================== */
+
+/* Alias classes used by components (same as your existing *-gradient vars) */
+.bg-hero-gradient {
+  background: var(--gradient-hero);
+}
+.bg-calm-gradient {
+  background: var(--gradient-calm);
+}
+.bg-card-gradient {
+  background: var(--gradient-card);
+}
+
+/* Any decorative full-screen/background layer should not eat clicks */
+.bg-hero-gradient,
+.bg-calm-gradient,
+.bg-card-gradient,
+.section-overlay,
+.bg-noise,
+.bg-blur,
+.bg-glow {
+  pointer-events: none;
+}
+
+/* Helper: raise real content above backgrounds when needed */
+.clickable-content {
+  position: relative;
+  z-index: 10;
+}
+
+/* Optional: if you ever have a background wrapper, push it behind */
+.decor-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -10;
+  pointer-events: none;
+}
+/* Put decorative absolute layers behind everything by default */
+[class*="absolute"][class*="inset-0"] {
+  /* only if they’re pure decoration, it won’t affect positioned UI */
+  pointer-events: none;
+}
+/* Make sure no default margins leak at the very top */
+html,
+body,
+#root {
+  height: 100%;
+  background: hsl(var(--background));
+  margin: 0; /* safety, even with preflight */
+}
+
+/* Header should always sit above and be clickable */
+header {
+  pointer-events: auto;
+}
+
+/* Decorative full-bleed layers must not intercept clicks */
+[class*="absolute"][class*="inset-0"] {
+  pointer-events: none;
+}
+
+/* If your header uses translucency, ensure it paints its own bg */
+.sticky.top-0 {
+  background: hsl(var(--background) / 0.95);
 }
